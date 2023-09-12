@@ -1,15 +1,44 @@
-import { StatusBar } from "expo-status-bar";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import React, { useState } from "react";
+import {
+  Button,
+  FlatList,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
+import TaskInput from "./components/TaskInput";
+import TaskItem from "./components/TaskItem";
 
 export default function App() {
+  const [allTasks, setAllTasks] = useState<{ text: string; id: string }[]>([]);
+
+  const addTaskHandler = (enteredTask: any) => {
+    setAllTasks((prevTasks) => [
+      ...prevTasks,
+      { text: enteredTask, id: Math.random().toString() },
+    ]);
+  };
+
+  const deleteTaskHandler = (id: string) => {
+    setAllTasks((prevTasks) => prevTasks.filter((el) => el.id !== id));
+  };
+
   return (
     <View style={styles.appContainer}>
-      <View style={styles.inputContainer}>
-        <TextInput placeholder="Write task!" style={styles.textInput} />
-        <Button title="Add task!"></Button>
-      </View>
+      <TaskInput addTaskHandler={addTaskHandler} />
       <View style={styles.taskContainer}>
-        <Text>List of tasks...</Text>
+        <FlatList
+          data={allTasks}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <TaskItem
+              text={item.text}
+              deleteTaskHandler={deleteTaskHandler}
+              id={item.id}
+            />
+          )}
+        />
       </View>
     </View>
   );
@@ -20,24 +49,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 50,
     paddingHorizontal: 15,
-  },
-  inputContainer: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 24,
-    borderBottomWidth: 1,
-    borderColor: "#cccccc",
-  },
-  textInput: {
-    padding: 10,
-    // justifyContent: "flex-end",
-    borderWidth: 2,
-    borderRadius: 5,
-    borderColor: "#cccccc",
-    width: "70%",
-    marginRight: 8,
   },
   taskContainer: {
     flex: 9,
