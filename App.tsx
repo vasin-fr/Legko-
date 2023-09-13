@@ -1,16 +1,10 @@
 import React, { useState } from "react";
-import {
-  Button,
-  FlatList,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import { Button, FlatList, Image, StyleSheet, View } from "react-native";
 import TaskInput from "./components/TaskInput";
 import TaskItem from "./components/TaskItem";
 
 export default function App() {
+  const [modalIsVisible, setModalIsVisible] = useState<boolean>(false);
   const [allTasks, setAllTasks] = useState<{ text: string; id: string }[]>([]);
 
   const addTaskHandler = (enteredTask: any) => {
@@ -18,15 +12,32 @@ export default function App() {
       ...prevTasks,
       { text: enteredTask, id: Math.random().toString() },
     ]);
+    modalIsVisibleChange();
   };
 
   const deleteTaskHandler = (id: string) => {
     setAllTasks((prevTasks) => prevTasks.filter((el) => el.id !== id));
   };
 
+  const modalIsVisibleChange = () => {
+    setModalIsVisible((prev) => !prev);
+  };
+
   return (
     <View style={styles.appContainer}>
-      <TaskInput addTaskHandler={addTaskHandler} />
+      <View style={{ marginBottom: 12 }}>
+        <Button
+          title="My new TARGET"
+          color="#5e0acc"
+          onPress={modalIsVisibleChange}
+        />
+      </View>
+      <TaskInput
+        addTaskHandler={addTaskHandler}
+        visible={modalIsVisible}
+        modalIsVisibleChange={modalIsVisibleChange}
+      />
+
       <View style={styles.taskContainer}>
         <FlatList
           data={allTasks}
