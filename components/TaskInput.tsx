@@ -54,16 +54,16 @@ const TaskInput = ({
         <View style={styles.buttonContainer}>
           <View style={styles.button}>
             <Button
-              title="Add task!"
-              onPress={addOneTaskHandler}
-              color="#b180f0"
+              title="Canel"
+              onPress={modalIsVisibleChange}
+              color="#f31282"
             />
           </View>
           <View style={styles.button}>
             <Button
-              title="Canel"
-              onPress={modalIsVisibleChange}
-              color="#f31282"
+              title="Add task!"
+              onPress={addOneTaskHandler}
+              color="#b180f0"
             />
           </View>
         </View>

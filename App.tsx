@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Button, FlatList, Image, StyleSheet, View } from "react-native";
+import { Button, FlatList, StyleSheet, View } from "react-native";
 import TaskInput from "./components/TaskInput";
 import TaskItem from "./components/TaskItem";
+import { StatusBar } from "expo-status-bar";
 
 export default function App() {
   const [modalIsVisible, setModalIsVisible] = useState<boolean>(false);
@@ -24,34 +25,37 @@ export default function App() {
   };
 
   return (
-    <View style={styles.appContainer}>
-      <View style={{ marginBottom: 12 }}>
-        <Button
-          title="My new TARGET"
-          color="#5e0acc"
-          onPress={modalIsVisibleChange}
+    <>
+      <StatusBar style="light" />
+      <View style={styles.appContainer}>
+        <View style={{ marginBottom: 12 }}>
+          <Button
+            title="My new TARGET"
+            color="#a065ec"
+            onPress={modalIsVisibleChange}
+          />
+        </View>
+        <TaskInput
+          addTaskHandler={addTaskHandler}
+          visible={modalIsVisible}
+          modalIsVisibleChange={modalIsVisibleChange}
         />
-      </View>
-      <TaskInput
-        addTaskHandler={addTaskHandler}
-        visible={modalIsVisible}
-        modalIsVisibleChange={modalIsVisibleChange}
-      />
 
-      <View style={styles.taskContainer}>
-        <FlatList
-          data={allTasks}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <TaskItem
-              text={item.text}
-              deleteTaskHandler={deleteTaskHandler}
-              id={item.id}
-            />
-          )}
-        />
+        <View style={styles.taskContainer}>
+          <FlatList
+            data={allTasks}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <TaskItem
+                text={item.text}
+                deleteTaskHandler={deleteTaskHandler}
+                id={item.id}
+              />
+            )}
+          />
+        </View>
       </View>
-    </View>
+    </>
   );
 }
 
