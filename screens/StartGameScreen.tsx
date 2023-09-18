@@ -1,7 +1,13 @@
 import { View, TextInput, StyleSheet } from "react-native";
 import PrimaryButtons from "../components/PrimaryButtons";
+import { useState } from "react";
 
 const StartGameScreen = () => {
+  const [enteredValue, setEnteredValue] = useState<string>("");
+
+  // const validation = (enteredValue: number) =>
+  // typeof enteredValue !== "number" ? setEnteredValue(0) : enteredValue;
+
   return (
     <View style={styles.inputContainer}>
       <TextInput
@@ -10,8 +16,22 @@ const StartGameScreen = () => {
         maxLength={2}
         autoCapitalize="none"
         autoCorrect={false}
+        onChangeText={setEnteredValue}
+        value={enteredValue}
       />
-      <PrimaryButtons title="First" />
+      <View style={styles.buttonsContainer}>
+        <View style={styles.buttonContainer}>
+          {/* <PrimaryButtons title="Reset" /> */}
+        </View>
+        <View style={styles.buttonContainer}>
+          <PrimaryButtons
+            title="Start"
+            onPress={() => {
+              console.log(enteredValue);
+            }}
+          />
+        </View>
+      </View>
     </View>
   );
 };
@@ -22,7 +42,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 24,
     marginTop: 100,
     padding: 16,
-    backgroundColor: "#72063c",
+    backgroundColor: "#4e0329",
     alignItems: "center",
     borderRadius: 8,
     elevation: 5,
@@ -41,5 +61,11 @@ const styles = StyleSheet.create({
     borderBottomColor: "#ddb52f",
     borderBottomWidth: 2,
     textAlign: "center",
+  },
+  buttonsContainer: {
+    flexDirection: "row",
+  },
+  buttonContainer: {
+    flex: 1,
   },
 });

@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { Text, StyleSheet, View } from "react-native";
+import React from "react";
+import { StyleSheet, ImageBackground } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import StartGameScreen from "./screens/StartGameScreen";
 
 import { StatusBar } from "expo-status-bar";
@@ -8,9 +9,20 @@ export default function App() {
   return (
     <>
       <StatusBar style="light" />
-      <View style={styles.appContainer}>
-        <StartGameScreen></StartGameScreen>
-      </View>
+
+      <LinearGradient
+        style={styles.appContainer}
+        colors={["#4e0329", "#ddb52f"]}
+      >
+        <ImageBackground
+          source={require("./assets/images/background.png")}
+          resizeMode="cover"
+          style={styles.backgroundImg}
+          imageStyle={styles.styleImg}
+        >
+          <StartGameScreen />
+        </ImageBackground>
+      </LinearGradient>
     </>
   );
 }
@@ -18,10 +30,11 @@ export default function App() {
 const styles = StyleSheet.create({
   appContainer: {
     flex: 1,
-    padding: 50,
-    paddingHorizontal: 15,
   },
-  taskContainer: {
-    flex: 9,
+  backgroundImg: {
+    flex: 1,
+  },
+  styleImg: {
+    opacity: 0.15,
   },
 });
